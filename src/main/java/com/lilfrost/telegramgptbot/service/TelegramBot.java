@@ -1,20 +1,24 @@
 package com.lilfrost.telegramgptbot.service;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
+import com.lilfrost.telegramgptbot.config.TelegramBotConfiguration;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+@Component
+@AllArgsConstructor
 public class TelegramBot extends TelegramLongPollingBot {
 
 
-    public TelegramBot(DefaultBotOptions options, String botToken) {
-        super(options, botToken);
+    TelegramBotConfiguration telegramBotConfiguration;
+
+    public TelegramBot(String botToken) {
+        super(botToken);
     }
 
     @Override

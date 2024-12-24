@@ -17,27 +17,16 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 @PropertySource("/application.properties")
 public class TelegramBotConfiguration {
 
-
+    @Value("${bot.token}")
+    String botToken;
+    @Value("${bot.name}")
+    String botName;
     @Bean
-    public TelegramBot telegramBot(@Value("${bot.token}") String botToken, TelegramBotsApi telegramBotsApi) {
-        DefaultBotOptions botOptions = new DefaultBotOptions();
-        TelegramBot bot =  new TelegramBot(botOptions, botToken);
+    public TelegramBot telegramBot() {
+        return new TelegramBot(botToken);
+    };
 
-        try {
-            telegramBotsApi.registerBot(bot);
-        } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
-        }
-        return bot;
-    }
 
-    @Bean
-    public TelegramBotsApi TelegramBotsApi() {
-        try {
-            return new TelegramBotsApi(DefaultBotSession.class);
-        } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
 }
